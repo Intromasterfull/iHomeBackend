@@ -29,6 +29,7 @@ const dataPost = (req, res = response) => {
             success: true,
             id: result.lastInsertRowid
         });
+        console.log("Nuevo registro guardado");
     }catch(error){
         res.status(500).json({
             success: false,
