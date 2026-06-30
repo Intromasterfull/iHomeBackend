@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 
-//const db_path= "/dev/disk14s1/iHomeAssets/db/database.db";
-const db_path= '/Volumes/IhomeDataBa/iHomeAssets/database/app.db';
+//const db_path= /Volumes/IhomeDataBa/iHomeAssets/database/app.db; version mac
+const db_path= '/media/intromas33/IhomeDataBa/iHomeAssets/database/app.db';
 
 const db = new Database(db_path);
 
