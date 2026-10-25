@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS relay_schedule (
     relay_4 TEXT,
     relay_5 TEXT,
     relay_6 TEXT,
+    relay_7 TEXT,
+    relay_8 TEXT,
     dateToRun TEXT
 );
 `);
