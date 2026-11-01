@@ -2,7 +2,7 @@ const { response } = require('express');
 const db = require('../Controllers/database');
 
 const dataPost = (req, res = response) => {
-    const {relay_1,relay_2,relay_3,relay_4,relay_5,relay_6,dateToRun} = req.body;
+    const {relay_1,relay_2,relay_3,relay_4,relay_5,relay_6,relay_7,relay_8,dateToRun} = req.body;
 
     try{
         const stmt = db.prepare(`
@@ -12,9 +12,12 @@ const dataPost = (req, res = response) => {
                 relay_3,
                 relay_4,
                 relay_5,
+                relay_6,
+                relay_7,
+                relay_8,
                 dateToRun
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `);
         const result = stmt.run(
             relay_1,
@@ -22,6 +25,9 @@ const dataPost = (req, res = response) => {
             relay_3,
             relay_4,
             relay_5,
+            relay_6,
+            relay_7,
+            relay_8,
             dateToRun
         );
 
