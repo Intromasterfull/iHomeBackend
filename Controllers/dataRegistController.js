@@ -84,6 +84,8 @@ const dataDeleteAll = (req, res = response) =>{
         }
         const borrar = db.transaction(() => {
             const result = db.prepare('DELETE FROM relay_schedule').run();
+            //Reiniciamos contador
+            db.prepare("DELETE FROM sqlite_sequence WHERE name = 'relay_schedule'").run();
             return result.changes;
         });
         const eliminados = borrar();
