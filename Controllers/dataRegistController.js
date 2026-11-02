@@ -17,7 +17,7 @@ const dataPost = (req, res = response) => {
                 relay_8,
                 dateToRun
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `);
         const result = stmt.run(
             relay_1,
@@ -45,6 +45,63 @@ const dataPost = (req, res = response) => {
 
 }
 
+const dataDeleteById = (req, res = response) =>{
+    try{
+        const id = Number(req.params.id);
+
+        if(!Number.isInteger(id)){
+            return res.status(400).json({
+                success: false,
+                error: 'id invalido'
+            });
+        }
+
+        const result = db.prepare('DELETE FROM relay_schedule WHERE id = ?').run(id);
+
+        if(result.changes === 0){
+            return res.status(404).json({
+                success: false,
+                error: 'No existe registro ${id}'
+            });
+        }
+        res.json({success: true, id});
+        console.log('Registro ${id} eliminado');
+    }catch(error){
+        res.status(500).json({
+            success: false,
+            error: error.message
+        })
+    }
+}
+
+const dataDeleteAll = (req, res = response) =>{
+    try{
+        if(req.query.confirm !== 'true'){
+            return res.status(400).json({
+                success: false,
+                error: 'Agrega confirm true para borrar todos los datos'
+            });
+        }
+        const borrar = db.transaction(() => {
+            const result = db.prepare('DELETE FROM relay_schedule').run();
+            return result.changes;
+        });
+        const eliminados = borrar();
+
+        res.json({
+            success: true,
+            eliminados
+        });
+        console.log('Se eliminaron los registros');
+
+    }catch(error){
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+}
+
 const dataGet = (req, res = response) => {
     try {
 
@@ -69,4 +126,6 @@ const dataGet = (req, res = response) => {
 module.exports = {
     dataPost,
     dataGet,
+    dataDeleteById,
+    dataDeleteAll
 };
